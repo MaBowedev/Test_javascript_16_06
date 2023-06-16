@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        console.log('ES1-----------------------------------------------------')
+        //Ex 1: Set + algoritmi
+        //crea una funzione che prende in ingresso due set di 5 parole e restituisce la differenza tra il
+        //numero di parole aventi lunghezza pari presenti nel primo set e il numero di parole che terminano
+        //in 'a' presenti nel secondo set.
+        //chiamare la funzione con valori a piacere per stampare il risultato.
+
+
+        {
+            function even_words(set) {
+                let word_counter = 0
+                set.forEach(el => {
+                    if (el.length % 2 == 0) {
+                        word_counter++
+                    }
+                })
+                return word_counter
+            }
+            function a_words(set) {
+                word2_counter = 0
+                set.forEach(el => {
+                    if (el.charAt(el.length - 1) == 'a') {
+                        word2_counter++
+                    }
+                })
+                return word2_counter
+            }
+
+            function set_comparison(set_a, set_b) {
+                return even_words(set_a) - a_words(set_b)
+            }
+
+            let set1 = new Set(['ciao', 'cane', 'banane', 'ciabatta', 'baracca'])
+            let set2 = new Set(['barabba', 'nano', 'baro', 'cane', 'banane'])
+            console.log(set_comparison(set1, set2))
+        }
+
+
+
+        console.log('ES2-----------------------------------------------------')
+
+        //Ex 2: Funzioni + array + oggetti + algoritmi
+        //Scrivi una funzione che prenda in input un array di 3 oggetti rappresentanti persone (nome,
+        //cognome, età) e restituisca un nuovo array contenente le 3 persone ordinate per età crescente
+        //(dal più giovane al più anziano).
+        //Chiamare la funzione per produrre l'array, e successivamente iterare su questo array per stampare
+        //le informazioni di tutte e 3 le persone. dammiPersoneOrdinate ( [ {mario rossi, 32}, {luigi verdi, 25}, {peach pink, 30} ] )
+        //produce: [{luigi verdi, 25}, {peach pink, 30}, {mario rossi, 32}, ]
+
+        {
+
+
+
+            function dammi_persone(arr_obj) {
+                new_array = []
+                for (let x = 0; x < arr_obj.length; x++) {
+                    new_array.push(arr_obj[x])
+                }
+                return new_array.sort((a, b) => a.età - b.età)
+            }
+
+
+            let persone = [{
+                nome: 'mario',
+                cognome: 'Rossi',
+                età: 32
+            },
+            {
+                nome: 'luigi',
+                cognome: 'verdi',
+                età: 25
+            },
+
+            {
+                nome: 'peach',
+                cognome: 'pink',
+                età: 30
+            }]
+
+
+
+            console.log(dammi_persone(persone))
+
+
+        }
+
+
+
+
+        console.log('ES3-----------------------------------------------------')
+        //Crea un array di 6 stringhe a piacere.
+        //Successivamente, crea una mappa che avrà come chiavi le parole contenute nell'array e per valori
+        //le loro lunghezze.
+        //Itera sulla mappa per stampare, per ogni coppia al suo interno, la frase:
+        //la parola … contiene … caratteri
+
+
+        {
+
+            let array = ['cane', 'animale', 'intelligente', 'fare', 'male', 'esercizi']
+            let newMap = new Map([])
+
+            for (let x = 0; x < array.length; x++) {
+                let l = array[x].length
+                newMap.set(array[x], l)
+            }
+            for (let [k, v] of newMap) {
+                console.log(`la parola ${k} contiene ${v} caratteri`)
+            }
+
+
+        }
+
+        console.log('ES4-----------------------------------------------------')
+
+        {
+            // Ex 4: date + JSON
+            //Dato il seguente JSON:
+            //
+            //"date1": "1990-10-10",
+            //"date2": "1980-10-10",
+            //"date3": "1970-10-10",
+            //"date4": "1960-10-10"
+            //
+            //trova la strategia corretta per stampare in output la data più "piccola" e la data più "grande" tra
+            //quelle fornite.
+
+
+            const json = `[{
+            "date1": "1990-10-10",
+            "date2": "1980-10-10",
+            "date3": "1970-10-10",
+            "date4": "1960-10-10"}]`;
+
+
+            const dates = JSON.parse(json)
+
+            //NOTA la funzione sta assumento che con data più piccola si intende la data più recente e per grande la data più lontana
+
+            function smaller(arr_obj) {
+                result = []
+                for (let x = 0; x < arr_obj.length; x++) {
+                    let obj = arr_obj[x]
+                    for (let k in obj) {
+                        let date_ms = new Date(obj[k]).getTime()
+                        result.push(date_ms)
+                    }
+
+                    let grande = result.reduce((a, b) => Math.min(a, b))
+                    let piccolo = result.reduce((a, b) => Math.max(a, b), -Infinity)
+                    indexg = result.indexOf(grande)
+                    indexp = result.indexOf(piccolo)
+                    let keyg = Object.keys(obj)[indexg]
+                    let keyp = Object.keys(obj)[indexp]
+                    return console.log(`la data più grande è: ${obj[keyg]}, la data più piccola è: ${obj[keyp]}`)
+
+                }
+
+
+            }
+
+
+
+
+
+            smaller(dates)
+
+        }
+        console.log('ES5-----------------------------------------------------')
+        // Ex 5: Algoritmi
+        // Data una stringa s a piacere, stampare solo i caratteri univoci, ovvero i caratteri che compaiono
+        //SOLO una volta nella lista.
+        //Ad esempio:
+        //abbazia -> zi
+
+        {
+            let s = 'maledetto'
+            let s2 = ''
+            for (let x = 0; x < s.length; x++) {
+                let counter = 0
+                for (y = 0; y < s.length; y++) {
+                    if (s[x] == s[y]) {
+                        counter += 1
+                    }
+                }
+                if (counter == 1) {
+                    s2 += s[x]
+                }
+                else {
+                    continue
+                }
+            }
+            console.log(`${s} =>  ${s2}`)
+        }
+
+
+
+        console.log('ES6 Medio-----------------------------------------------------')
+        // Ex 1: Array + algoritmi
+        //crea un array di 6 numeri interi e stampa in console la differenza tra il numero di numeri maggiori
+        //di 10 e il numero di numeri inferiori a 1.
+        //Inoltre, se il valore calcolato è pari a 0, stampa tutti i numeri dell'array in senso invertito,
+        //altrimenti, stampa solo il primo e l'ultimo numero dell'array.
+
+        {
+            function numbers_greater(array) {
+                counter = 0
+                array.forEach(el => {
+                    if (el > 10) {
+                        counter++
+                    }
+                })
+                return counter
+            }
+
+            function number_minors(array) {
+                counter = 0
+                array.forEach(el => {
+                    if (el < 0) {
+                        counter++
+                    }
+                })
+                return counter
+            }
+
+
+            function difference(array) {
+
+                let diff = numbers_greater(array) - number_minors(array)
+                if (diff == 0) {
+                    let new_array = []
+                    for (let x = array.length - 1; x >= 0; x--) {
+                        new_array.push(array[x])
+                    }
+                    return console.log(`la differenza è uguale a ${diff} e quindi inverto l'array ${new_array}`)
+                }
+                else {
+                    return console.log(` la differenza è uguale a ${diff} e quindi il primo numero è ${array[0]} e l'ultimo è ${array[array.length - 1]}`)
+                }
+            }
+
+            let array1 = [12, 13, -2, 14, -10, -10]
+            let array2 = [2, 13, -2, 14, 10, 10]
+            difference(array1)
+        }
+
+
+        console.log('ES7 Medio-----------------------------------------------------')
+
+        //Ex 2: Array + funzioni + oggetti + algoritmi
+        //crea una funzione che prende in ingresso due set di 5 numeri e restituisce un oggetto.
+        //Questo oggetto avrà le seguenti proprietà:
+        //winner -> avrà valore 1 se il primo set ha più proprietà del secondo, altrimenti 2, e 0 se hanno
+        //
+        //numero pari di proprietàmorePositive: avrà valore 1 se il primo set ha più numeri positivi (> 0) del secondo, altrimenti 2, e 0
+        // se hanno numero pari di proprietà
+        // chiama la funzione per stampare proprietà e valori dell'oggetto restituito
+
+
+        //la funzione è stata creata assumendo che per le prioprietà dei Set si intendano gli elementi
+
+
+
+
+        {
+            function longest_set(set_a, set_b) {
+                let long = 0
+                if (set_a.size == set_b.size) {
+                    long = 0
+                }
+                else if (set_a.size > set_b.size) {
+                    long = 1
+                }
+                else if (set_a.size < set_b.size) {
+                    long = 2
+                }
+                return long
+            }
+
+            function positives(set_a, set_b) {
+                let countera = 0
+                let counterb = 0
+                let number_pos = 0
+
+                set_a.forEach(el => {
+                    if (el > 0) {
+                        countera++
+                    }
+                })
+                set_b.forEach(el2 => {
+                    if (el2 > 0) {
+                        counterb++
+                    }
+                })
+                if (countera > counterb) {
+                    number_pos = 1
+                }
+                if (countera < counterb) {
+                    number_pos = 2
+                }
+                if (countera == counterb) {
+                    number_pos = 0
+                }
+                return number_pos
+            }
+
+            function set_to_obj(set_a, set_b) {
+                let newobj = {}
+                newobj.winner = longest_set(set_a, set_b)
+                newobj.morepositive = positives(set_a, set_b)
+                return newobj
+            }
+
+
+
+
+
+
+            let set1 = new Set([10, 20, 12, 30, 8])
+            let set2 = new Set([14, 20, 30, -25, 10])
+
+
+            console.log(set_to_obj(set1, set2))
+        }
+        console.log('ES8 Medio-----------------------------------------------------')
+        // Ex 3: Funzioni + oggetti + algoritmi
+        //crea una funzione che prende in ingresso 2 oggetti che rappresentano due rettangoli, che avranno
+        //questa struttura: {x: valore numerico, y: valore numerico}, e una stringa che può avere i seguenti
+        //valori:
+        //- perimetro
+        //- area
+        //Se il terzo parametro ha valore 'perimetro' la funzione restituisce la differenza tra il perimetro del
+        //primo rettangolo e il perimetro del secondo rettangolo.
+        //Se il terzo parametro ha valore 'area' la funzione restituisce la somma tra l'area del primo
+        //rettangolo e l'area del secondo rettangolo.
+        //Ad esempio:
+        //opeRettangolo( rect1, rect2, 'area' ) -> risultato
+        //opeRettangolo( rect1, rect2, 'perimetro' ) -> risultato
+        //Chiama la funzione 2 volte per stampare i valori prodotti, usando valori a piacere.
+
+
+        {
+            function perimetro(obj) {
+                let side1 = obj['x'] * 2
+                let side2 = obj['y'] * 2
+                return side1 + side2
+            }
+            function area(obj) {
+                return obj['x'] * obj['y']
+            }
+
+            function main(obj1, obj2, str) {
+                switch (str) {
+
+                    case "perimetro":
+                        return perimetro(obj1) - perimetro(obj2);
+
+                    case "area":
+                        return area(obj1) + area(obj2)
+                }
+
+            }
+
+
+
+            let rettangolo1 = {
+                x: 10,
+                y: 20
+            }
+            let rettangolo2 = {
+                x: 15,
+                y: 25
+            }
+
+            console.log(main(rettangolo1, rettangolo2, 'area'))
+        }
+        console.log('ES9 Medio-----------------------------------------------------')
+        //Ex 4: Funzioni di funzioni + algoritmi
+        //Creare una funzione chiamata opeStringa che accetta 2 parametri:
+        //- una stringa
+        //- una funzione che prende in ingresso una stringa e restituisce una nuova stringa,
+        //trasformata
+        //La funzione opeStringa deve restituire la stringa prodotta dalla funzione passata come secondo
+        //parametro.
+        //In fase di chiamata di opeStringa, operare nel seguente modo:
+        //- chiamare opeStringa con una stringa "javascript" e una funzione che produca la versione
+        //maiuscola
+        //- chiamare opeStringa con una stringa "javascript" e una funzione che produca una stringa
+        //contenente solo i caratteri alla posizione dispari
+        //- chiamare opeStringa con una stringa "javascript" e una funzione che produca la stringa
+        //invertita
+        //Ad esempio:
+        //s = javascript
+        //opeStringa(s, uc) -> produce JAVASCRIPT
+        //opeStringa(s, odd) -> produce aacit
+        //opeStringa(s, invert) -> produce tpircsavaj
+        //Stampare in output i risultati.
+
+
+        {
+            function maiuscola(str) {
+                return str.toUpperCase()
+            }
+
+            function dispari(str) {
+                let s = ' '
+                for (let x = 0; x < str.length; x++) {
+
+                    if (x % 2 != 0) {
+                        s += str[x]
+                    }
+                    else {
+                        continue
+                    }
+                } return s
+            }
+
+            function invertita(str) {
+                let s = ' '
+                for (let x = str.length - 1; x > 0; x--) {
+                    s += str[x]
+                }
+                return s
+            }
+
+            function opeStringa(str, fn) {
+                return console.log(fn(str))
+            }
+
+
+            let stringa = 'javascript'
+            opeStringa(stringa, maiuscola)
+            opeStringa(stringa, dispari)
+            opeStringa(stringa, invertita)
+        }
+
+
+        console.log('ES10 hard-----------------------------------------------------')
+
+        //Ex 1
+        //Dato il seguente JSON:
+        //[{
+        //"autore": "mario rossi",
+        //"titolo": "jerry potter",
+        //"data": "1990-10-10"
+        //},
+        //{
+        //"autore": "luigi verdi",
+        //"titolo": "la storia finita",
+        //"data": "1960-10-10"
+        //},
+        //{
+        //"autore": "peach rosi",
+        //"titolo": "metti la cera",
+        //"data": "1970-10-10"
+        //},
+        // {
+        //    "autore": "mario rossi",
+        //       "titolo": "togli la cerca",
+        //           "data": "1980-10-10"
+        // },
+        // {
+        //      "autore": "luigi verdi",
+        //          "titolo": "mma kid",
+        //              "data": "1950-10-10"
+        //  },
+        //   {
+        //        "autore": "lucia bianchi",
+        //           "titolo": "javascript non è java",
+        //                "data": "1940-10-10"
+        //    },
+        //     {
+        //         "autore": "anna neri",
+        //             "titolo": "java non è javascript",
+        //                "data": "1930-10-10"
+        //     }
+        //]
+        //che rappresenta un array di oggetti rappresentanti libri con le proprietà "titolo", "autore" e "data",
+        //   scrivi una funzione che prenda in input l'array e restituisca un nuovo array di oggetti contenente
+        //solo i libri scritti da autori diversi, per evitare che ci siano nell'array oggetti con autori identici.
+        //L'array contiene quindi 1 libro per autore, il primo trovato nel parsing.
+        //Dall'array prodotto dalla funzione stampare il libro più vecchio e il libro più recente.
+
+
+
+
+        const json = `[{
+            "autore": "mario rossi",
+            "titolo": "jerry potter",
+            "data": "1990-10-10"
+        },
+        {
+            "autore": "luigi verdi",
+            "titolo": "la storia finita",
+            "data": "1960-10-10"
+        },
+        {
+            "autore": "peach rosi",
+            "titolo": "metti la cera",
+            "data": "1970-10-10"
+        },
+        {
+            "autore": "mario rossi",
+            "titolo": "togli la cerca",
+            "data": "1980-10-10"
+        },
+        {
+            "autore": "luigi verdi",
+            "titolo": "mma kid",
+            "data": "1950-10-10"
+        },
+        {
+            "autore": "lucia bianchi",
+            "titolo": "javascript non è java",
+            "data": "1940-10-10"
+        },
+        {
+            "autore": "anna neri",
+            "titolo": "java non è javascript",
+            "data": "1930-10-10"
+        }]`
+
+        const books = JSON.parse(json)
+
+
+
+        function libri(arr_obj) {
+            const uniqueAuthors = arr_obj.reduce((accumulator, current) => {
+                if (!accumulator.find((item) => item.autore === current.autore)) {
+                    accumulator.push(current);
+                }
+                return accumulator;
+                
+            }, []);
+            
+              return console.log(uniqueAuthors.map(item => item.autore))
+            
+        }
+
+
+
+
+            
+
+
+
+        
+        
+
+        libri(books)
+    </script>
+</body>
+
+</html>
